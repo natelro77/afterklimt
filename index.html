@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>An Archive for Yara</title>
+  <meta name="description" content="A private archive. Not everything was said aloud." />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Preconnect for fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+
+  <!-- ============================================
+       FILM GRAIN OVERLAY
+       ============================================ -->
+  <div class="film-grain" aria-hidden="true"></div>
+
+  <!-- ============================================
+       CUSTOM CURSOR
+       ============================================ -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- ============================================
+       LOADING SCREEN
+       ============================================ -->
+  <div id="loading-screen" role="status" aria-live="polite">
+    <p class="loading-text">Restoring archived memories&hellip;</p>
+    <div class="loading-bar-container">
+      <div class="loading-bar"></div>
+    </div>
+    <p class="loading-subtitle">Please wait &mdash; some files are fragile.</p>
+  </div>
+
+  <!-- ============================================
+       NAVIGATION
+       ============================================ -->
+  <nav aria-label="Room navigation">
+    <div class="nav-brand">The Archive &nbsp;&middot;&nbsp; Private Collection</div>
+    <ul class="nav-links">
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#archive">Archive</a></li>
+      <li><a href="#listening">Listening</a></li>
+      <li><a href="#observatory">Observatory</a></li>
+      <li><a href="#exit-room">Exit</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============================================
+       ROOM I — THE GALLERY
+       ============================================ -->
+  <section id="gallery" aria-label="Room I: The Gallery">
+    <!-- Gold particle canvas -->
+    <canvas id="gallery-canvas" aria-hidden="true"></canvas>
+
+    <div class="gallery-eyebrow">Room I &nbsp;&mdash;&nbsp; The Gallery</div>
+
+    <h1 class="gallery-title">
+      <em>Y</em>ara<span style="font-weight:300; font-size:0.55em; display:block; margin-top:0.3em; letter-spacing:0.08em; color:var(--pale-gold)">An Archive of Unfinished Observations</span>
+    </h1>
+
+    <p class="gallery-subtitle">
+      &ldquo;Some things survive only in fragments.&rdquo;
+    </p>
+
+    <div class="gallery-tagline">
+      <span>Curated with the precision of someone who notices everything.</span>
+      <span>Arranged with the restraint of someone who said almost nothing.</span>
+    </div>
+
+    <a href="#archive" class="enter-btn">Enter the Archive</a>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       ROOM II — THE ARCHIVE
+       ============================================ -->
+  <section id="archive" aria-label="Room II: The Archive">
+
+    <div class="archive-header reveal">
+      <p class="section-label">Room II &nbsp;&mdash;&nbsp; The Archive</p>
+      <h2 class="archive-title">Memory Fragments</h2>
+      <p class="archive-desc">
+        The following objects were recovered in no particular order.
+        Hover to disturb the dust.
+      </p>
+    </div>
+
+    <div class="archive-grid">
+
+      <!-- Fragment 001 -->
+      <div class="memory-card reveal" tabindex="0">
+        <div class="memory-tag">Fragment 001</div>
+        <p class="memory-timestamp">2023 — 02:14 AM</p>
+        <p class="memory-text">
+          The laugh came first, before anything else. Before the name, before the voice, before the whole sentence that made the laugh necessary. It stayed longer than it should have.
+        </p>
+        <div class="memory-hover">She laughed like she already knew the punchline.</div>
+      </div>
+
+      <!-- Fragment 002 — wide -->
+      <div class="memory-card wide reveal" tabindex="0">
+        <div class="memory-tag">Fragment 002</div>
+        <p class="memory-timestamp">2023 — undated</p>
+        <p class="memory-text">
+          There is a particular kind of attention she gives &mdash; not performative, not searching for an exit. Just present. The kind that makes you want to be worth it.
+          <br /><br />
+          <span class="strikethrough">I wrote three drafts of the message before sending nothing.</span>
+        </p>
+        <div class="memory-hover">Some doors open before you realize you were reaching.</div>
+      </div>
+
+      <!-- Fragment 003 -->
+      <div class="memory-card tall reveal" tabindex="0">
+        <div class="memory-tag">Fragment 003</div>
+        <p class="memory-timestamp">2024 — early spring</p>
+        <p class="memory-text">
+          The way she moved through a room. Not making an entrance. Just &mdash; arriving.
+          <br /><br />
+          <span class="strikethrough">I noticed immediately and said nothing for twenty minutes.</span>
+          <br /><br />
+          Both things can be true.
+        </p>
+        <div class="memory-hover">Some observations require no elaboration.</div>
+      </div>
+
+      <!-- Fragment 004 -->
+      <div class="memory-card reveal" tabindex="0">
+        <div class="memory-tag">Fragment 004</div>
+        <p class="memory-timestamp">2024 — 11:58 PM</p>
+        <p class="memory-text">
+          She reads things slowly. Which means she actually reads them.
+          That is rarer than it should be.
+        </p>
+        <div class="memory-hover">She would understand this, actually.</div>
+      </div>
+
+      <!-- Fragment 005 — tall -->
+      <div class="memory-card tall reveal" tabindex="0">
+        <div class="memory-tag">Fragment 005</div>
+        <p class="memory-timestamp">2024 — no timestamp</p>
+        <p class="memory-text">
+          There were small things she did that she probably didn't know she was doing.
+          <br /><br />
+          The tilted head. The specific silence before she said something important. The way she held her own opinion quietly, then stated it once, clearly, and let it stand.
+          <br /><br />
+          <span class="strikethrough">I have thought about this more times than I am comfortable admitting.</span>
+        </p>
+        <div class="memory-hover">The smallest gestures have the longest half-lives.</div>
+      </div>
+
+      <!-- Fragment 006 -->
+      <div class="memory-card reveal" tabindex="0">
+        <div class="memory-tag">Fragment 006</div>
+        <p class="memory-timestamp">2024 — 03:41 AM</p>
+        <p class="memory-text">
+          I kept finding gold long after she left a room.
+          That isn't a metaphor.
+          <span class="strikethrough">It is also a metaphor.</span>
+        </p>
+        <div class="memory-hover">The trace of someone who was genuinely there.</div>
+      </div>
+
+      <!-- Fragment 007 — wide -->
+      <div class="memory-card wide reveal" tabindex="0">
+        <div class="memory-tag">Fragment 007</div>
+        <p class="memory-timestamp">2024 — summer, Tuesday</p>
+        <p class="memory-text">
+          This is not a love letter. This is a record.
+          <br />
+          A careful, very slightly obsessive record.
+          <br /><br />
+          Of someone who deserved to be noticed, and was.
+          Even if she never heard about it.
+          <br /><br />
+          <span class="strikethrough">Especially because she never heard about it.</span>
+        </p>
+        <div class="memory-hover">
+          <a href="#" id="broken-link" style="color:var(--text-ghost); font-size:0.75rem;">[related file — click to open]</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="archive-divider" aria-hidden="true"></div>
+
+    <div style="text-align:center; position:relative;">
+      <button class="do-not-press" id="do-not-press">Do Not Press</button>
+      <div class="secret-object" tabindex="0" role="button" aria-label="Hidden object">
+        &mdash;&nbsp;classified&nbsp;&mdash;
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============================================
+       ROOM III — THE LISTENING ROOM
+       ============================================ -->
+  <section id="listening" aria-label="Room III: The Listening Room">
+
+    <div class="listening-header reveal">
+      <p class="section-label">Room III &nbsp;&mdash;&nbsp; The Listening Room</p>
+      <h2 class="listening-title">Audio Guide</h2>
+      <p class="listening-desc">
+        The following selection was curated specifically for this archive.
+        <br />
+        Audio may alter interpretation of the exhibit.
+        <br /><br />
+        <em>Recommended: listen alone, at night, with the lights low.</em>
+      </p>
+    </div>
+
+    <!-- Vinyl visual -->
+    <div class="vinyl-container reveal" aria-hidden="true">
+      <div class="vinyl" title="Click to pause/resume"></div>
+    </div>
+
+    <p class="audio-guide-label reveal">Audio Guide &nbsp;&mdash;&nbsp; Exhibit Y</p>
+
+    <!-- Spotify Embed -->
+    <div class="spotify-wrapper reveal">
+      <iframe
+        id="spotify-iframe"
+        src="https://open.spotify.com/embed/playlist/4WgPDoMjqgvaEeeVKHHDtO?utm_source=generator&theme=0"
+        width="100%"
+        height="352"
+        frameBorder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        title="Yara's Playlist"
+      ></iframe>
+    </div>
+
+    <p class="listening-footnote reveal">
+      These songs were chosen. The order matters.
+    </p>
+
+  </section>
+
+  <!-- ============================================
+       ROOM IV — THE OBSERVATORY
+       ============================================ -->
+  <section id="observatory" aria-label="Room IV: The Observatory">
+
+    <!-- Stars canvas -->
+    <canvas id="stars-canvas" aria-hidden="true"></canvas>
+    <!-- Constellation canvas -->
+    <canvas id="constellation-canvas" aria-hidden="true"
+      style="position:absolute;inset:0;pointer-events:none;z-index:1;"></canvas>
+
+    <div class="observatory-header reveal" style="position:relative;z-index:2;">
+      <p class="section-label">Room IV &nbsp;&mdash;&nbsp; The Observatory</p>
+      <h2 class="observatory-title">2:43 AM</h2>
+      <p class="observatory-desc">
+        A room for thoughts that are only possible at this hour.
+        <br />
+        The kind that arrive quietly and refuse to leave.
+      </p>
+    </div>
+
+    <div class="observatory-quotes reveal" style="position:relative;z-index:2;">
+      <blockquote class="obs-quote">
+        Some people <em>change the temperature</em> of a room by entering it.
+        Not loudly. Just &mdash; the air adjusts.
+      </blockquote>
+
+      <blockquote class="obs-quote">
+        There is a specific loneliness in knowing someone well enough
+        to miss the version of them you never fully got to see.
+      </blockquote>
+
+      <blockquote class="obs-quote">
+        I thought about saying it <em>at least four times</em>.
+        Each time, the moment passed before I could decide whether it was the right one.
+        <br /><br />
+        I think that was cowardice. I am filing it here as &ldquo;restraint.&rdquo;
+      </blockquote>
+
+      <blockquote class="obs-quote">
+        Distance is strange. It doesn&rsquo;t always grow with miles.
+        Sometimes the person is right there and the distance is still very large
+        and you are still very aware of it.
+      </blockquote>
+    </div>
+
+  </section>
+
+  <!-- ============================================
+       ROOM V — THE EXIT
+       ============================================ -->
+  <section id="exit-room" aria-label="Room V: The Exit">
+
+    <div class="exit-room-number">Room V &nbsp;&mdash;&nbsp; The Exit</div>
+
+    <div class="exit-line" aria-hidden="true"></div>
+
+    <blockquote class="exit-quote">
+      &ldquo;You would have understood this <em>immediately</em>.&rdquo;
+    </blockquote>
+
+    <p class="exit-signature">
+      &mdash; collected between 2023 and now &mdash;
+    </p>
+
+    <!-- Hidden dedicatee name, barely visible -->
+    <div class="dedicatee" aria-hidden="true">Yara</div>
+
+    <footer class="exit-footer">
+      An archive of unfinished observations &nbsp;&middot;&nbsp; Private collection &nbsp;&middot;&nbsp; Not for circulation
+    </footer>
+
+  </section>
+
+  <!-- ============================================
+       SECRET OVERLAY (Do Not Press)
+       ============================================ -->
+  <div id="secret-overlay" class="secret-overlay" role="dialog" aria-modal="true" aria-label="Hidden message">
+    <p class="secret-overlay-text">
+      &ldquo;You are one of those people who makes it impossible to be
+      indifferent. Not because you demand attention &mdash;
+      but because you deserve it. And some people notice.
+      <br /><br />
+      <em>This person noticed.</em>&rdquo;
+    </p>
+    <button class="secret-overlay-close" id="overlay-close">Close the file</button>
+  </div>
+
+  <!-- ============================================
+       TOAST NOTIFICATION
+       ============================================ -->
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    <p class="toast-text" id="toast-text"></p>
+  </div>
+
+  <!-- ============================================
+       AMBIENT AUDIO TOGGLE
+       ============================================ -->
+  <button class="ambient-btn" id="ambient-btn" aria-label="Toggle ambient audio">
+    <span class="ambient-dot"></span>
+    Ambient Tones
+  </button>
+
+  <!-- ============================================
+       JAVASCRIPT
+       ============================================ -->
+  <script src="script.js"></script>
+
+</body>
+</html>
