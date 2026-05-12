@@ -1182,3 +1182,36 @@ section {
     height: 120px;
   }
 }
+
+/* ============================================
+   TOUCH / MOBILE — DISABLE CUSTOM CURSOR
+   On touch screens there is no pointer so the
+   custom cursor elements are hidden and the
+   default touch interaction is restored.
+   ============================================ */
+@media (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+
+  /* Memory cards get a visible tap highlight instead */
+  .memory-card {
+    cursor: pointer;
+  }
+
+  .enter-btn,
+  button,
+  a {
+    cursor: pointer;
+  }
+
+  /* Ambient button */
+  .ambient-btn {
+    cursor: pointer;
+  }
+}
