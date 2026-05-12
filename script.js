@@ -19,42 +19,46 @@ window.addEventListener('load', () => {
 });
 
 // ============================================
-// CUSTOM CURSOR
+// CUSTOM CURSOR (desktop / mouse only)
 // ============================================
+const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
 const cursorDot = document.querySelector('.cursor-dot');
 const cursorRing = document.querySelector('.cursor-ring');
 
 let mouseX = 0, mouseY = 0;
 let ringX = 0, ringY = 0;
 
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
+if (!isTouch) {
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
 
-  cursorDot.style.left = mouseX + 'px';
-  cursorDot.style.top = mouseY + 'px';
+    cursorDot.style.left = mouseX + 'px';
+    cursorDot.style.top = mouseY + 'px';
 
-  // Spawn gold sparkle
-  if (Math.random() < 0.25) {
-    createSparkle(mouseX, mouseY);
+    // Spawn gold sparkle
+    if (Math.random() < 0.25) {
+      createSparkle(mouseX, mouseY);
+    }
+  });
+
+  // Smooth cursor ring
+  function animateCursor() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    cursorRing.style.left = ringX + 'px';
+    cursorRing.style.top = ringY + 'px';
+    requestAnimationFrame(animateCursor);
   }
-});
+  animateCursor();
 
-// Smooth cursor ring
-function animateCursor() {
-  ringX += (mouseX - ringX) * 0.12;
-  ringY += (mouseY - ringY) * 0.12;
-  cursorRing.style.left = ringX + 'px';
-  cursorRing.style.top = ringY + 'px';
-  requestAnimationFrame(animateCursor);
+  // Cursor expand on hover
+  document.querySelectorAll('a, button, .memory-card, .enter-btn, .secret-object').forEach(el => {
+    el.addEventListener('mouseenter', () => cursorRing.classList.add('expanded'));
+    el.addEventListener('mouseleave', () => cursorRing.classList.remove('expanded'));
+  });
 }
-animateCursor();
-
-// Cursor expand on hover
-document.querySelectorAll('a, button, .memory-card, .enter-btn, .secret-object').forEach(el => {
-  el.addEventListener('mouseenter', () => cursorRing.classList.add('expanded'));
-  el.addEventListener('mouseleave', () => cursorRing.classList.remove('expanded'));
-});
 
 // ============================================
 // GOLD SPARKLES
