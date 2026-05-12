@@ -1,0 +1,1184 @@
+/* ============================================
+   YARA'S ARCHIVE — STYLESHEET
+   A digital art museum. An emotional archive.
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=EB+Garamond:ital,wght@0,400;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@100;300;400&display=swap');
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --black: #0a0806;
+  --cream: #f5f0e8;
+  --ivory: #faf6ef;
+  --dark-brown: #1c1208;
+  --warm-brown: #2e1f0f;
+  --muted-gold: #b8965a;
+  --champagne: #e8d5a3;
+  --pale-gold: #d4b896;
+  --deep-gold: #9a7040;
+  --text-cream: #e8e0d0;
+  --text-dim: #8a7a6a;
+  --text-ghost: #4a3f35;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--black);
+  color: var(--text-cream);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  cursor: none;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(184, 150, 90, 0.3);
+  color: var(--champagne);
+}
+
+/* ============================================
+   CUSTOM CURSOR
+   ============================================ */
+.cursor-dot {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: var(--muted-gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s;
+  mix-blend-mode: screen;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(184, 150, 90, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, border-color 0.3s;
+}
+
+.cursor-ring.expanded {
+  width: 48px;
+  height: 48px;
+  border-color: rgba(184, 150, 90, 0.8);
+}
+
+/* ============================================
+   GOLD SPARKLE PARTICLES
+   ============================================ */
+.sparkle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  border-radius: 50%;
+  animation: sparkle-fade 0.8s ease-out forwards;
+}
+
+@keyframes sparkle-fade {
+  0% { opacity: 1; transform: scale(1) translate(0, 0); }
+  100% { opacity: 0; transform: scale(0) translate(var(--tx), var(--ty)); }
+}
+
+/* ============================================
+   FILM GRAIN OVERLAY
+   ============================================ */
+.film-grain {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 9990;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  animation: grain-shift 0.5s steps(2) infinite;
+}
+
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2%, -3%); }
+  50% { transform: translate(3%, 1%); }
+  75% { transform: translate(-1%, 4%); }
+  100% { transform: translate(2%, -2%); }
+}
+
+/* ============================================
+   LOADING SCREEN
+   ============================================ */
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 9995;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1.5s ease, visibility 1.5s;
+}
+
+#loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loading-text {
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.75rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 2.5rem;
+}
+
+.loading-bar-container {
+  width: 240px;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, transparent, var(--muted-gold), transparent);
+  animation: loading-fill 3s ease-in-out forwards;
+}
+
+@keyframes loading-fill {
+  0% { width: 0%; opacity: 0.5; }
+  30% { width: 35%; opacity: 1; }
+  60% { width: 60%; opacity: 0.8; }
+  80% { width: 82%; opacity: 1; }
+  100% { width: 100%; opacity: 0.6; }
+}
+
+.loading-subtitle {
+  margin-top: 1.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: rgba(184, 150, 90, 0.4);
+  letter-spacing: 0.1em;
+  animation: pulse-dim 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dim {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 500;
+  padding: 1.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(10,8,6,0.9) 0%, transparent 100%);
+  transition: opacity 0.5s;
+}
+
+.nav-brand {
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.6rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.4s;
+}
+
+.nav-links a:hover {
+  color: var(--champagne);
+}
+
+/* ============================================
+   ROOM SECTIONS — SHARED
+   ============================================ */
+section {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.section-label {
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.55rem;
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fade-up 1.2s ease forwards;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   ROOM 1: THE GALLERY
+   ============================================ */
+#gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem;
+  background: radial-gradient(ellipse at 50% 60%, #1a1008 0%, #0a0806 65%);
+  position: relative;
+}
+
+/* Gold texture canvas */
+#gallery-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.gallery-eyebrow {
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.6rem;
+  letter-spacing: 0.7em;
+  text-transform: uppercase;
+  color: var(--muted-gold);
+  margin-bottom: 2.5rem;
+  animation: fade-in 2s ease forwards;
+  opacity: 0;
+}
+
+.gallery-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: var(--cream);
+  margin-bottom: 0.3em;
+  animation: fade-in 2.5s 0.5s ease forwards;
+  opacity: 0;
+  text-shadow: 0 0 80px rgba(184, 150, 90, 0.15);
+}
+
+.gallery-title em {
+  font-style: italic;
+  color: var(--champagne);
+}
+
+.gallery-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  color: var(--pale-gold);
+  margin-bottom: 3.5rem;
+  animation: fade-in 2.5s 1s ease forwards;
+  opacity: 0;
+  letter-spacing: 0.05em;
+}
+
+.gallery-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  line-height: 2;
+  max-width: 480px;
+  margin-bottom: 4rem;
+  animation: fade-in 2.5s 1.5s ease forwards;
+  opacity: 0;
+}
+
+.gallery-tagline span {
+  display: block;
+}
+
+.enter-btn {
+  display: inline-block;
+  padding: 1rem 3rem;
+  border: 1px solid rgba(184, 150, 90, 0.4);
+  color: var(--champagne);
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.65rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: transparent;
+  cursor: none;
+  transition: border-color 0.6s, background 0.6s, color 0.6s, box-shadow 0.6s;
+  animation: fade-in 2.5s 2s ease forwards;
+  opacity: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.enter-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(184,150,90,0.05), rgba(184,150,90,0.12));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s ease;
+}
+
+.enter-btn:hover::before {
+  transform: scaleX(1);
+}
+
+.enter-btn:hover {
+  border-color: rgba(184, 150, 90, 0.8);
+  color: var(--cream);
+  box-shadow: 0 0 30px rgba(184, 150, 90, 0.1), inset 0 0 30px rgba(184,150,90,0.05);
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: fade-in 2s 3s ease forwards;
+  opacity: 0;
+}
+
+.scroll-hint span {
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.5rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--text-ghost);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--text-ghost), transparent);
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+
+@keyframes scroll-pulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 0.8; transform: scaleY(1.2); }
+}
+
+/* ============================================
+   ROOM 2: THE ARCHIVE
+   ============================================ */
+#archive {
+  background: var(--dark-brown);
+  padding: 8rem 4rem;
+  background: linear-gradient(180deg, #0a0806 0%, #120c06 30%, #1a1208 70%, #0d0905 100%);
+}
+
+.archive-header {
+  text-align: center;
+  margin-bottom: 6rem;
+}
+
+.archive-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.archive-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-dim);
+  max-width: 400px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto 5rem;
+}
+
+.memory-card {
+  position: relative;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(184, 150, 90, 0.1);
+  padding: 2rem;
+  min-height: 180px;
+  cursor: none;
+  transition: border-color 0.5s, background 0.5s, transform 0.4s;
+  overflow: hidden;
+}
+
+.memory-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(184,150,90,0.03), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.memory-card:hover::before {
+  opacity: 1;
+}
+
+.memory-card:hover {
+  border-color: rgba(184, 150, 90, 0.3);
+  background: rgba(255,255,255,0.04);
+  transform: translateY(-3px);
+}
+
+.memory-timestamp {
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  color: var(--text-ghost);
+  margin-bottom: 1.2rem;
+}
+
+.memory-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-cream);
+  font-weight: 300;
+}
+
+.memory-text .strikethrough {
+  text-decoration: line-through;
+  color: var(--text-ghost);
+  text-decoration-color: rgba(184,150,90,0.4);
+}
+
+.memory-hover {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem 2rem;
+  background: linear-gradient(to top, rgba(10,8,6,0.9), transparent);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--muted-gold);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s, transform 0.5s;
+  pointer-events: none;
+}
+
+.memory-card:hover .memory-hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.memory-tag {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.5rem;
+  letter-spacing: 0.3em;
+  color: rgba(184,150,90,0.3);
+  text-transform: uppercase;
+}
+
+/* Card size variants */
+.memory-card.wide {
+  grid-column: span 2;
+}
+
+.memory-card.tall {
+  min-height: 260px;
+}
+
+/* Archive separator */
+.archive-divider {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--muted-gold), transparent);
+  margin: 3rem auto;
+  opacity: 0.3;
+}
+
+/* Secret object */
+.secret-object {
+  position: absolute;
+  bottom: 2rem;
+  right: 3rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.75rem;
+  color: rgba(184,150,90,0.15);
+  letter-spacing: 0.1em;
+  cursor: none;
+  transition: color 0.5s, text-shadow 0.5s;
+}
+
+.secret-object:hover {
+  color: var(--muted-gold);
+  text-shadow: 0 0 20px rgba(184,150,90,0.4);
+}
+
+/* Do not press button */
+.do-not-press {
+  display: block;
+  margin: 2rem auto 0;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.1);
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.55rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.5rem;
+  cursor: none;
+  transition: all 0.5s;
+}
+
+.do-not-press:hover {
+  border-color: rgba(184,150,90,0.3);
+  color: var(--muted-gold);
+}
+
+.do-not-press.pressed {
+  border-color: rgba(184,150,90,0.6);
+  color: var(--champagne);
+  box-shadow: 0 0 20px rgba(184,150,90,0.1);
+}
+
+/* ============================================
+   ROOM 3: THE LISTENING ROOM
+   ============================================ */
+#listening {
+  background: linear-gradient(180deg, #0d0905 0%, #0f0b07 40%, #0a0806 100%);
+  padding: 8rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+.listening-header {
+  margin-bottom: 4rem;
+}
+
+.listening-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 1rem;
+}
+
+.listening-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+  max-width: 480px;
+}
+
+/* Vinyl visual */
+.vinyl-container {
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.vinyl {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%,
+    #1a1208 0%, #2a1e0e 15%, #1a1208 20%,
+    #2e2010 21%, #1a1208 22%,
+    #2a1e0e 35%, #1a1208 40%,
+    #2e2010 41%, #1a1208 42%,
+    #2a1e0e 55%, #1a1208 60%,
+    rgba(184,150,90,0.1) 98%, rgba(184,150,90,0.3) 100%
+  );
+  margin: 0 auto 2rem;
+  position: relative;
+  animation: spin-slow 15s linear infinite;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6), 0 0 80px rgba(184,150,90,0.05);
+}
+
+.vinyl.paused {
+  animation-play-state: paused;
+}
+
+.vinyl::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--muted-gold), var(--deep-gold));
+  box-shadow: 0 0 10px rgba(184,150,90,0.4);
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.audio-guide-label {
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.55rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: rgba(184,150,90,0.5);
+  margin-bottom: 2rem;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid rgba(184,150,90,0.15);
+  display: inline-block;
+}
+
+/* Spotify embed */
+.spotify-wrapper {
+  width: 100%;
+  max-width: 560px;
+  position: relative;
+}
+
+.spotify-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid rgba(184,150,90,0.15);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.spotify-wrapper iframe {
+  display: block;
+  width: 100%;
+  border-radius: 0;
+  filter: brightness(0.9) sepia(0.1);
+}
+
+.listening-footnote {
+  margin-top: 2rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.8rem;
+  color: var(--text-ghost);
+  letter-spacing: 0.05em;
+}
+
+/* Floating particles in listening room */
+.listen-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--muted-gold);
+  pointer-events: none;
+  animation: float-particle linear infinite;
+  opacity: 0;
+}
+
+@keyframes float-particle {
+  0% { opacity: 0; transform: translateY(0) translateX(0) scale(0); }
+  10% { opacity: 0.6; transform: translateY(-20px) scale(1); }
+  90% { opacity: 0.2; }
+  100% { opacity: 0; transform: translateY(-120px) translateX(var(--drift)) scale(0.3); }
+}
+
+/* ============================================
+   ROOM 4: THE OBSERVATORY
+   ============================================ */
+#observatory {
+  background: linear-gradient(180deg, #050405 0%, #060408 50%, #04050a 100%);
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 4rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+#stars-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.observatory-header {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 4rem;
+}
+
+.observatory-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.observatory-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+  max-width: 400px;
+}
+
+/* Floating phrases */
+.float-phrase {
+  position: absolute;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: rgba(184, 150, 90, 0.2);
+  pointer-events: none;
+  animation: phrase-drift linear infinite;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+
+@keyframes phrase-drift {
+  0% { opacity: 0; transform: translateY(0) translateX(0); }
+  10% { opacity: 1; }
+  90% { opacity: 0.3; }
+  100% { opacity: 0; transform: translateY(-60px) translateX(var(--x-drift)); }
+}
+
+/* Observatory quotes */
+.observatory-quotes {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.obs-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  line-height: 1.8;
+  color: var(--text-cream);
+  opacity: 0.7;
+  letter-spacing: 0.03em;
+  transition: opacity 0.8s;
+  padding: 0 1rem;
+  border-left: 1px solid rgba(184,150,90,0.2);
+}
+
+.obs-quote em {
+  font-style: italic;
+  color: var(--pale-gold);
+}
+
+/* Constellation */
+#constellation-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================
+   ROOM 5: THE EXIT
+   ============================================ */
+#exit-room {
+  background: linear-gradient(180deg, #04050a 0%, #0a0806 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem;
+  position: relative;
+}
+
+.exit-room-number {
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.55rem;
+  letter-spacing: 0.6em;
+  color: var(--text-ghost);
+  text-transform: uppercase;
+  margin-bottom: 4rem;
+}
+
+.exit-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--muted-gold), transparent);
+  margin: 0 auto 4rem;
+  opacity: 0.3;
+}
+
+.exit-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 400;
+  color: var(--cream);
+  max-width: 580px;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+.exit-quote.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.exit-quote em {
+  font-style: italic;
+  color: var(--pale-gold);
+}
+
+.exit-signature {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.8rem;
+  color: var(--text-ghost);
+  letter-spacing: 0.1em;
+  margin-top: 1rem;
+}
+
+.exit-footer {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.5rem;
+  letter-spacing: 0.4em;
+  color: rgba(255,255,255,0.06);
+  text-transform: uppercase;
+}
+
+/* Dedicatee name — hidden in the exit */
+.dedicatee {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(3rem, 8vw, 6rem);
+  color: rgba(184,150,90,0.06);
+  letter-spacing: 0.1em;
+  position: absolute;
+  bottom: 6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  transition: color 2s, text-shadow 2s;
+  cursor: none;
+  user-select: none;
+}
+
+.dedicatee:hover {
+  color: rgba(184,150,90,0.2);
+  text-shadow: 0 0 60px rgba(184,150,90,0.1);
+}
+
+/* ============================================
+   HIDDEN MESSAGE OVERLAY
+   ============================================ */
+.secret-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,8,6,0.97);
+  z-index: 8000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s, visibility 0.8s;
+}
+
+.secret-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.secret-overlay-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  color: var(--champagne);
+  max-width: 500px;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+
+.secret-overlay-close {
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.55rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: transparent;
+  border: 1px solid rgba(184,150,90,0.2);
+  padding: 0.7rem 2rem;
+  cursor: none;
+  transition: all 0.4s;
+}
+
+.secret-overlay-close:hover {
+  color: var(--champagne);
+  border-color: rgba(184,150,90,0.5);
+}
+
+/* ============================================
+   NOTIFICATION TOAST
+   ============================================ */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: rgba(20,15,10,0.95);
+  border: 1px solid rgba(184,150,90,0.2);
+  padding: 1rem 1.5rem;
+  z-index: 7000;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s, transform 0.5s;
+  max-width: 300px;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--pale-gold);
+  line-height: 1.6;
+}
+
+/* ============================================
+   AMBIENT AUDIO BUTTON
+   ============================================ */
+.ambient-btn {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 6000;
+  background: transparent;
+  border: 1px solid rgba(184,150,90,0.2);
+  color: var(--text-dim);
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+  font-size: 0.5rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.2rem;
+  cursor: none;
+  transition: all 0.4s;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.ambient-btn:hover {
+  border-color: rgba(184,150,90,0.4);
+  color: var(--champagne);
+}
+
+.ambient-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-ghost);
+  transition: background 0.3s;
+}
+
+.ambient-btn.playing .ambient-dot {
+  background: var(--muted-gold);
+  box-shadow: 0 0 6px var(--muted-gold);
+  animation: dot-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.5); }
+}
+
+/* ============================================
+   GLOBAL ANIMATIONS
+   ============================================ */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   BACKGROUND PHRASES (GHOST TEXT)
+   ============================================ */
+.ghost-phrase {
+  position: fixed;
+  pointer-events: none;
+  z-index: -1;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.7rem;
+  color: rgba(184,150,90,0.03);
+  white-space: nowrap;
+  animation: ghost-fade 20s ease-in-out infinite;
+  user-select: none;
+}
+
+@keyframes ghost-fade {
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 0.015; }
+  50% { opacity: 0.04; }
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(184, 150, 90, 0.2);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(184, 150, 90, 0.4);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  nav {
+    padding: 1rem 1.5rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  #gallery, #archive, #listening, #observatory, #exit-room {
+    padding: 6rem 2rem;
+  }
+
+  .archive-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .memory-card.wide {
+    grid-column: span 1;
+  }
+
+  .vinyl {
+    width: 120px;
+    height: 120px;
+  }
+}
